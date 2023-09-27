@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block body %} 
+
+
+<section id="about" class="content-sections bg-light d-flex align-items-center">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2>Results</h2>
+                <p class="lead mb-5">Analysis of Wikipedia Page</p>
+
+                <!-- Results Filter -->
+                <button class="btn btn-secondary mx-3" id="wordcloud"> Wordcloud </button>
+                <button class="btn btn-secondary mx-3" id="table"> Table </button>
+                <!-- <button class="btn btn-secondary mx-3" id="pie"> Pie Chart </button> -->
+
+                <!-- Results SVG -->
+                <div class="m-5" id="results"> {{ results }} </div>
+
+                <!-- Results Table -->
+                <div id="results_table"> 
+                    <p class="mt-5 mb-2"> Top 5 words in the page</p>
+                {% for table in tables %}
+                    {{ table|safe }}
+                {% endfor %}
+                </div>
+
+
+                <a href="/" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="static/script.js"></script>
+
+{% endblock %}
+

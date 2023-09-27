@@ -1,0 +1,23 @@
+.masthead {
+    background-image: url('bg-masthead.jpg'); 
+    background-size: cover;
+    height: 200px;
+}
+
+.content-section {
+    height: 500px;
+}
+
+.content-sections {
+    height: 600px;
+}
+
+table {
+    margin: 25 auto;
+    border: 1px solid black; 
+}
+
+table td, table th, table tr {
+    border: 1px solid black; 
+    padding: 5px;
+  }
