@@ -2,14 +2,9 @@
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
-import enchant
 import re
 import sys
 from wordcloud import WordCloud
-
-
-# Initialising objects
-enchantObj = enchant.Dict("en_US")
 
 
 # Keep track of scraped links
@@ -18,6 +13,9 @@ scraped_links = []
 # Initialise dictionary of all words
 dictionary = dict()
 
+# Invalid Search Term Error
+class InvalidSearchTermError(Exception):
+    pass
 
 # Scraping Wikipedia to find all the urls for the table of content and store the data into a pandas DF to be returned
 def scrape_link(search_term):
@@ -35,9 +33,7 @@ def scrape_link(search_term):
     # Check if the website is a valid website
     invalid = soup.find("div", class_="no-article-text-sister-projects")
     if invalid:
-        sys.exit(
-            "There is currently no wikipedia site for your search term, please try again."
-        )
+        raise InvalidSearchTermError("Invalid search term: {}".format(search_term))
 
     print(f"Scraping {url} for data...")
 
@@ -81,14 +77,12 @@ def scrape_data_from_page(href):
         if word:
             word = word.group()
 
-            # Check if the word is a valid word in the dictionary
-            if enchantObj.check(word):
-                word = word.lower()
-                # Add word into dictionary count
-                if word not in dictionary.keys():
-                    dictionary[word] = 1
-                else:
-                    dictionary[word] += 1
+            word = word.lower()
+            # Add word into dictionary count
+            if word not in dictionary.keys():
+                dictionary[word] = 1
+            else:
+                dictionary[word] += 1
 
 
 # Finding top 3 most commonly used words

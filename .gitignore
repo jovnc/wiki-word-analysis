@@ -1,3 +1,6 @@
 /__pycache__
 /.venv
 /.vscode
+results.svg
+results.json
+results.csv

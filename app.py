@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, Markup
-from script import scrape_link, add_percentage, reduce_df_memory, create_wordcloud
+from script import scrape_link, add_percentage, reduce_df_memory, create_wordcloud, InvalidSearchTermError
 
 # Initialise Flask Object
 app = Flask(__name__)
@@ -17,7 +17,10 @@ def search():
     if request.method == "POST":
         search_term = request.form.get("search")
         # Scrape the link and store it as a pandas df
-        df = scrape_link(search_term)
+        try:
+            df = scrape_link(search_term)
+        except InvalidSearchTermError as e:
+            return render_template("error.html", error = e)
         
         # Add percentage column
         df = add_percentage(df)
