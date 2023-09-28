@@ -52,7 +52,6 @@ def create_df(dictionary):
     df = pd.DataFrame(list(dictionary.items()), columns = ["word", "count"])
     df = df.sort_values("count", ascending = False)
     df = df.reset_index(drop=True)
-
     return df
 
 
